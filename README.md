@@ -16,10 +16,8 @@ this api made in djangorestframework that i used python and django based languag
 ## Code Samples
 
 class AllFollowers (generics.ListAPIView):
-
     queryset = UserFollowing.objects.all()
     serializer_class = Followers_serializer
-
     def get_queryset(self):
         pk = self.kwargs["pk"]
         profile = Profile_users.objects.get(pk=pk)
@@ -31,7 +29,6 @@ class CreatePostGV (generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Posts.objects.all()
     serializer_class = Post_serializers
-
     def perform_create(self, serializer):
         user = self.request.user
         profile = Profile_users.objects.get(user=user)
@@ -44,12 +41,10 @@ class CreatePostGV (generics.CreateAPIView):
         
 class SinglePostGV (APIView):
     permission_classes = [PostUpdatePermission, IsAuthenticated]
-
     def get(self, request, pk, pk2):
         post = Posts.objects.get(pk=pk2)
         serializer = Post_serializers(post)
         return Response(serializer.data)
-
     def put(self, request, pk, pk2):
         post = Posts.objects.get(pk=pk2)
         self.check_object_permissions(request, post)
@@ -57,10 +52,8 @@ class SinglePostGV (APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
-
         else:
             return Response(serializer.errors)
-
     def delete(self, request, pk, pk2):
         post = Posts.objects.get(pk=pk2)
         self.check_object_permissions(request, post)
@@ -75,26 +68,26 @@ class SinglePostGV (APIView):
 first you should install all requirments on your virtual enviroment then do all migrations and use all these endpoints
 
 there is some endpoints that you can use
-@ all Profiles
+# all Profiles
 loaclhost/profiles/
-@single profile
+# single profile
 loaclhost/profiles/id/
-@alll post of individual profile
+# alll post of individual profile
 loaclhost/profiles/id/posts/
-@single post
+# single post
 loaclhost/profiles/id/post/id/
-@createpost
+# createpost
 loaclhost/profiles/createpost
-@register
+# register
 loaclhost/acccount/register/
-@edit profile
+# edit profile
 loaclhost/account/register/id/profile/
-@makefollow
+# makefollow
 loaclhost/profiles/id/makefollow
-@allfollowers of single profile
+# allfollowers of single profile
 loaclhost/profiles/id/followers/
-@allfollowing of single profile
+# allfollowing of single profile
 loaclhost/profiles/id/following/
-@unfollow
+# unfollow
 loaclhost/profiles/id/unfollow
 
